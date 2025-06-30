@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Register</title></head>
+<body>
+<section layout:fragment="content">
+    <h2>Register</h2>
+
+    <div th:if="${param.success}" class="alert alert-success">
+        Registrasi berhasil! Silakan <a th:href="@{/login}">login</a>.
+    </div>
+
+    <div th:if="${usernameError}" class="alert alert-danger">
+        <p th:text="${usernameError}"></p>
+    </div>
+
+    <form th:action="@{/auth/register}" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <select name="role" required>
+            <option value="">Pilih Role</option>
+            <option value="ADMIN">Admin</option>
+            <option value="USER">User</option>
+        </select>
+        <button type="submit" class="auth-button">Register</button>
+    </form>
+    <a th:href="@{/auth/login}" class="link">Already have an account? Log in</a>
+</section>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"> <head>
+    <title>404 - Page Not Found</title>
+    <style>
+        /* Anda bisa menambahkan sedikit style kustom */
+        .error-container {
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 50px;
+        }
+        .error-code {
+            font-size: 10rem;
+            font-weight: 700;
+            color: #e9ecef;
+            margin: 0;
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 2rem;
+            margin-top: -20px;
+            color: #6c757d;
+        }
+        .error-description {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+        .btn-home {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background-color: #0d6efd;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="error-container">
+        <h1 class="error-code">404</h1>
+        <h2 class="error-message">Oops! Page Not Found</h2>
+        <p class="error-description">
+            Sorry, the page you are looking for does not exist. It might have been moved or deleted.
+        </p>
+        <p>
+            Path: <span th:text="${path}"></span>
+        </p>
+        <a th:href="@{/}" class="btn-home">Go to Homepage</a>
+    </div>
+</section>
+</body>
+</html>

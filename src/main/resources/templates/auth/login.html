@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Login</title></head>
+<body>
+<section layout:fragment="content">
+    <h2>Login</h2>
+
+    <div th:if="${param.error}" class="alert alert-danger">
+        Login failed. Please check your username and password.
+    </div>
+
+    <div th:if="${param.logout}" class="alert alert-success">
+        You have been logged out.
+    </div>
+
+    <div th:if="${registrationSuccess}" class="alert alert-success">
+        <p th:text="${registrationSuccess}"></p>
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-danger">
+        <p th:text="${param.error}"></p>
+    </div>
+
+    <form th:action="@{/auth/login}" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit" class="auth-button">Login</button>
+    </form>
+    <a th:href="@{/auth/register}" class="link">Don't have an account? Register</a>
+</section>
+</body>
+</html>

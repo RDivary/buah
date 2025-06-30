@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Create Buah</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h2>Create Buah</h2>
+
+    <form th:action="@{/buah}" method="post">
+        <input type="text" name="name" placeholder="Name" required />
+        <button type="submit" class="save-button">Save</button>
+
+    </form>
+
+    <a th:href="@{/}" class="link">Kembali ke Home</a>
+</section>
+</body>
+</html>

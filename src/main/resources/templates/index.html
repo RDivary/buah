@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <title>List Buah</title>
+</head>
+
+<!-- Override layoutClass: gunakan layout lebar -->
+<div layout:fragment="layoutClass" class="layout-wide">
+    <section layout:fragment="content">
+
+        <div class="top-bar">
+            <h1>List Buah</h1>
+            <form th:action="@{/auth/logout}" method="post">
+                <button type="submit" class="button logout">Logout</button>
+            </form>
+        </div>
+
+        <!-- Tampilkan tombol tambah hanya untuk ADMIN -->
+        <div sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/buah/create}" class="button">+ Add Buah</a>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Nama</th>
+                <th sec:authorize="hasRole('ADMIN')">Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <!-- Baris untuk ADMIN -->
+            <tr th:each="buah : ${buahs}" sec:authorize="hasRole('ADMIN')">
+                <td th:text="${buah.name}">Nama Buah</td>
+                <td>
+                    <a th:href="@{/buah/update/{id}(id=${buah.id})}" class="button">Update</a>
+                    <form id="deleteForm" th:action="@{/buah/{id}(id=${buah.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                    <script>
+                        // Pilih form berdasarkan ID yang baru kita buat
+                        const deleteForm = document.getElementById('deleteForm');
+
+                        deleteForm.addEventListener('submit', function (e) {
+                            // Hentikan pengiriman form secara default
+                            e.preventDefault();
+
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+                                // Jika pengguna mengklik "Yes, delete it!"
+                                if (result.isConfirmed) {
+                                    // Lanjutkan pengiriman form
+                                    this.submit();
+                                }
+                            });
+                        });
+                    </script>
+
+                </td>
+            </tr>
+
+            <!-- Baris untuk non-ADMIN -->
+            <tr th:each="buah : ${buahs}" sec:authorize="!hasRole('ADMIN')">
+                <td th:text="${buah.name}">Nama Buah</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </section>
+</div>
+</html>
